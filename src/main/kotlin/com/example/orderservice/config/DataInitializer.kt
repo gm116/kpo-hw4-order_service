@@ -11,12 +11,16 @@ class DataInitializer {
 
     @Bean
     fun init(stationRepository: StationRepository) = CommandLineRunner {
-        val stations = listOf(
-            Station(name = "Москва"),
-            Station(name = "Казань"),
-            Station(name = "Санкт-Петербург"),
-            Station(name = "Набережные Челны")
-        )
-        stationRepository.saveAll(stations)
+        // Проверяем, если таблица пустая
+        if (stationRepository.count() == 0L) {
+            val stations = listOf(
+                Station(name = "Москва"),
+                Station(name = "Казань"),
+                Station(name = "Санкт-Петербург"),
+                Station(name = "Набережные Челны")
+            )
+            stationRepository.saveAll(stations)
+        }
     }
 }
+
