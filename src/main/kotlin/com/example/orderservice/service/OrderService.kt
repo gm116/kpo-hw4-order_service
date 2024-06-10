@@ -1,5 +1,5 @@
 package com.example.orderservice.service
-// OrderService.kt
+
 import com.example.orderservice.model.Order
 import com.example.orderservice.repository.OrderRepository
 import com.example.orderservice.repository.StationRepository
@@ -12,8 +12,8 @@ class OrderService(
     private val stationRepository: StationRepository
 ) {
     fun createOrder(userId: Long, fromStationId: Long, toStationId: Long): Order {
-        val fromStation = stationRepository.findById(fromStationId).orElseThrow { Exception("From station not found") }
-        val toStation = stationRepository.findById(toStationId).orElseThrow { Exception("To station not found") }
+        val fromStation = stationRepository.findById(fromStationId).orElseThrow { Exception("Направление \"ОТКУДА\" не найдено") }
+        val toStation = stationRepository.findById(toStationId).orElseThrow { Exception("Направление \"КУДА\" не найдено") }
         val order = Order(
             userId = userId,
             fromStationId = fromStation.id,
@@ -25,7 +25,7 @@ class OrderService(
     }
 
     fun getOrderById(id: Long): Order {
-        return orderRepository.findById(id).orElseThrow { Exception("Order not found") }
+        return orderRepository.findById(id).orElseThrow { Exception("Заказ не найден") }
     }
 
     fun processOrders() {
